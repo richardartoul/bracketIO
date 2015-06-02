@@ -86,8 +86,23 @@ module.exports = {
 			}
 		});
 	},
-	/*this code expects that the req will have the id of the league so it
-	can confirm that the user is part of the the league specified.*/
+
+	leagueGET: function(req, res) {
+		var leagueId = req.params.leagueId;
+		db.League.find({where: {id: leagueId}}).then(function(foundLeague) {
+			if (foundLeague) {
+				logger.info("Returned a league object");
+				res.status(200).json(foundLeague);
+			}
+			else {
+				logger.info("League not found.");
+				res.status(400).send("League not found");
+			}
+		});
+	},
+
+	/*this code expects that the req will have the id of the league event so it
+	can confirm that the user is indeed the owner of the the league specified.*/
 	eventGET: function(req, res) {
 		utils.findUserId(req.session.token, function(user) {
 				//checks if user is an current user in the league.

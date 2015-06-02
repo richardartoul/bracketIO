@@ -4,6 +4,17 @@ angular.module('app.leagues.show', [])
 
   $scope.indexUser;
 
+  $scope.getLeague = function() {
+    ShowLeague.getLeague($stateParams.id, function(err, response) {
+      if (!err) {
+        console.log("League not found!");
+      }
+      else {
+        console.log(response);
+      }
+    });
+  }
+
   $scope.getLeague = function (){
     ShowLeague.getLeague($stateParams.id, function (err, response) {
       if (!err) {
@@ -82,7 +93,6 @@ angular.module('app.leagues.show', [])
   $scope.selectUser = function (index) {
     $scope.indexUser = index;
   };
-
 
   $scope.getLeague();
 
